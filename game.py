@@ -15,18 +15,18 @@ def main():
     screen = pygame.display.set_mode(size)
 
     # Loading various images for buttons, chips, and cards
-    start_img = pygame.image.load("images/start-2.png").convert_alpha()
-    exit_img = pygame.image.load("images/exit-2.png").convert_alpha()
+    start_img = load_image("images/start-2.png")
+    exit_img = load_image("images/exit-2.png")
     chip_images = [
-        pygame.image.load("images/chipOrange.png").convert_alpha(),
-        pygame.image.load("images/chipPurple.png").convert_alpha(),
-        pygame.image.load("images/chipRed.png").convert_alpha(),
-        pygame.image.load("images/chipBlack.png").convert_alpha(),
+        load_image("images/chipOrange.png"),
+        load_image("images/chipPurple.png"),
+        load_image("images/chipRed.png"),
+        load_image("images/chipBlack.png"),
     ]
-    deal_img = pygame.image.load("images/deal.png").convert_alpha()
-    hit_img = pygame.image.load("images/hit.png").convert_alpha()
-    stand_img = pygame.image.load("images/stand.png").convert_alpha()
-    background_card = pygame.image.load("images/BackgroundRed.png").convert_alpha()
+    deal_img = load_image("images/deal.png")
+    hit_img = load_image("images/hit.png")
+    stand_img = load_image("images/stand.png")
+    background_card = load_image("images/BackgroundRed.png")
 
     center_x = size[0] // 2
     center_y = size[1] // 2
@@ -101,10 +101,8 @@ def main():
                         
         if game_over:
                 chip_display.hide()
-                game_over_text = custom_font.render("Game Over!", True, (255, 255, 255))
-                restart_again_text = custom_font.render("Click the screen to restart the game", True, (255, 255, 255))
-                screen.blit(game_over_text, (center_x, center_y))
-                screen.blit(restart_again_text, (center_x, 400))
+                display_text(screen, custom_font, f"Game Over!", (255, 255, 255), center_x, center_y)
+                display_text(screen, custom_font, f"Click the screen to restart the game", (255, 255, 255), center_x, 400)
                 restart_game = True
                 
                 
@@ -121,10 +119,9 @@ def main():
         
         if start_game: # Game has started
             chip_display.draw_chips(screen)
-            user_balance_text = custom_font.render(f"Balance: ${player.balance}", True, (255, 255, 255))
-            total_bet_text = custom_font.render(f"Bet: ${player.total_bet}", True, (255, 255, 255))
-            screen.blit(total_bet_text, (10, 10))
-            screen.blit(user_balance_text, (565, 630))
+            display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
+            display_text(screen, custom_font, f"Bet: ${player.total_bet}", (255, 255, 255), 10, 10))
+            
             if player.total_bet >= 1 and not deal_button_pressed:
                 if deal_button.draw(screen):
                     player.get_hand(2, deck)
@@ -150,14 +147,13 @@ def main():
             screen.blit(card_surface, (x_position, y_position))
             x_position += 95
             player_hand_value = deck.calculate_hand_value(player.hand)
-            player_hand_text = custom_font.render(f"{player_hand_value}", True, (255, 255, 255))
-            screen.blit(player_hand_text, (190, 360))
+            display_text(screen, custom_font, f"{player_hand_value}", (255, 255, 255), 190, 360)
 
             if not player_has_stood and not player_busted:
                 screen.blit(background_card, (896, 50))
                 first_card = croupier.hand[0]
                 croupier_hand_value = deck.calculate_hand_value([first_card])
-                croupier_hand_text = custom_font.render(f"{croupier_hand_value}", True, (255, 255, 255))
+                display_text(screen, custom_font, f"{croupier_hand_value}", (255, 255, 255), 925, 218)
                 screen.blit(croupier_hand_text, (925, 218))
                 if hit_button.draw(screen):
                     player.get_hand(1, deck)
@@ -171,27 +167,22 @@ def main():
         start_again_text = custom_font.render("Click the screen to start again", True, (255, 255, 255))
         # Display results if the player busts or stands
         if player_busted:
-            bust_text = custom_font.render("Bust", True, (255, 255, 255))
-            screen.blit(bust_text, (235, 360))
+            display_text(screen, custom_font, f"Bust!", (255, 255, 255), 235, 360)
             croupier_hand_value = deck.calculate_hand_value(croupier.hand)
-            croupier_hand_text = custom_font.render(f"{croupier_hand_value}", True, (255, 255, 255))
-            screen.blit(croupier_hand_text, (925, 218))
+            display_text(screen, custom_font, f"{croupier_hand_value}", (255, 255, 255), 925, 218)
             user_new_balance = player.balance
-            user_balance_text = custom_font.render(f"Balance: ${user_new_balance}", True, (255, 255, 255))
             pygame.draw.rect(screen, GREEN, (565, 630, 30, 30))
-            screen.blit(user_balance_text, (565, 630))
+            display_text(screen, custom_font, f"{user_new_balance}", (255, 255, 255), 565, 630)
             # Display text for player loss
-            player_loss_text = custom_font.render("Player Loses!", True, (255, 255, 255))
-            screen.blit(player_loss_text, (center_x, center_y))
-            screen.blit(start_again_text, (center_x, 400))
+            display_text(screen, custom_font, f"Player Loses!", (255, 255, 255), center_x, center_y)
+            display_text(screen, custom_font, f"Click the screen to start again", (255, 255, 255), center_x, 400)
             round_ended = True
             
         if player_has_stood:
             #Player stands
             croupier.logic(deck) # Croupier stands with 17
             croupier_hand_value = deck.calculate_hand_value(croupier.hand) 
-            croupier_hand_text = custom_font.render(f"{croupier_hand_value}", True, (255, 255, 255))
-            screen.blit(croupier_hand_text, (925, 218))
+            display_text(screen, custom_font, f"{croupier_hand_value}", (255, 255, 255), 925, 218)
             
             if deck.calculate_hand_value(player.hand) == 21 and len(player.hand) == 2:
                 # Condition for Blackjack: Player's hand total is 21 and has only two cards
@@ -199,11 +190,8 @@ def main():
                     # Player gets a Blackjack: Balance updated to 3 times the initial bet
                     user_new_balance = player.total_bet * 3 + player.balance
                     player.balance = user_new_balance
-                    user_balance_text = custom_font.render(f"Balance: ${player.balance}", True, (255, 255, 255))
-                    pygame.draw.rect(screen, GREEN, (565, 630, 200, 300))
-                    screen.blit(user_balance_text, (565, 630))
-                blackjack_text = custom_font.render("Blackjack!", True, (255, 255, 255))
-                screen.blit(blackjack_text, (center_x, center_y))
+                    display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
+                display_text(screen, custom_font, f"Blackjack", (255, 255, 255), center_x, center_y)
                 player.wins_displayed = True
                 round_ended = True # Indicates the round has ended
 
@@ -212,11 +200,9 @@ def main():
                 if not player.wins_displayed:
                     user_new_balance = player.total_bet * 2 + player.balance
                     player.balance = user_new_balance
-                    user_balance_text = custom_font.render(f"Balance: ${player.balance}", True, (255, 255, 255))
                     pygame.draw.rect(screen, GREEN, (565, 630, 200, 300))
-                    screen.blit(user_balance_text, (565, 630))
-                win_text = custom_font.render("Player wins!", True, (255, 255, 255))
-                screen.blit(win_text, (center_x, center_y))
+                    display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
+                display_text(screen, custom_font, f"Player Wins!", (255, 255, 255), center_x, center_y)
                 player.wins_displayed = True
                 round_ended = True # Indicates the round has ended
 
@@ -225,27 +211,22 @@ def main():
                 if not player.wins_displayed:  
                     user_new_balance = player.total_bet + player.balance
                     player.balance = user_new_balance
-                    user_balance_text = custom_font.render(f"Balance: ${user_new_balance}", True, (255, 255, 255))
-                    pygame.draw.rect(screen, GREEN, (565, 630, 300, 300))
-                    screen.blit(user_balance_text, (565, 630))
-                push_text = custom_font.render("Push!", True, (255, 255, 255))
-                screen.blit(push_text, (center_x, center_y))  
+                    display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
+                display_text(screen, custom_font, f"Push!", (255, 255, 255), center_x, center_y)   
                 player.wins_displayed = True
                 round_ended = True # Indicates the round has ended
             else:
                 # Player loses: None of the above conditions met
                 if not player.wins_displayed:
                     user_new_balance = player.balance
-                    user_balance_text = custom_font.render(f"Balance: ${user_new_balance}", True, (255, 255, 255))
                     pygame.draw.rect(screen, GREEN, (565, 630, 300, 300))
-                    screen.blit(user_balance_text, (565, 630))
+                    display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
                 # Display text for player loss
-                player_loss_text = custom_font.render("Player Loses!", True, (255, 255, 255))
-                screen.blit(player_loss_text, (center_x, center_y))
+                display_text(screen, custom_font, f"Player Loses!", (255, 255, 255), center_x, center_y)
                 player.wins_displayed = True
                 round_ended = True # Indicates the round has ended
             
-            screen.blit(start_again_text, (center_x, 400)) # Prompt to start a new round
+            display_text(screen, custom_font, f"Click the screen to start again", (255, 255, 255), center_x, 400) # Prompt to start a new round
             
         pygame.display.flip()
 
