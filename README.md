@@ -33,7 +33,7 @@ Blackjack, also known as 21, is a popular card game played in casinos. The objec
   - The dealer must hit on 16 or less and stand on 17 or more.
   - The player wins if their hand is closer to 21 than the dealer's without exceeding 21.
 
-## Classes
+## [Classes](classes/)
 
 The classes in this project have been organized into separate files for better code structure and organization:
 
