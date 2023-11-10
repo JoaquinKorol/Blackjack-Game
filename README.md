@@ -1,5 +1,5 @@
 # Blackjack Game
-#### Video Demo:  <https://www.youtube.com/watch?v=vaYldbohGRY&list=RDvaYldbohGRY&start_radio=1&ab_channel=YSYA>
+#### Video Demo:  <>
 ## Description
 
 This project represents my final proyect for CS50's Python course. It implements a Blackjack game using the Pygame library in Python. The game simulates a casino-style blackjack experience with a graphical user interface.
