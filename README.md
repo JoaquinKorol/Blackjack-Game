@@ -41,23 +41,23 @@ The classes in this project have been organized into separate files for better c
 
 The `Card` class represents a playing card, storing its suit, rank, and providing methods to retrieve its image path and value.
 
-### Deck
+### [Deck](classes/Deck.py)
 
 The `Deck` class creates a deck of 104 playing cards, manages shuffling, dealing cards, and calculating the value of a hand.
 
-### Croupier
+### [Croupier](classes/croupier.py)
 
 The `Croupier` class manages the dealer's actions, including dealing cards, following rules for hits/stands, and comparing hands.
 
-### Player
+### [Player](classes/player.py)
 
 The `Player` class represents the player in the game, handling their hand, bets, and balance.
 
-### Chips
+### [Chips](classes/chips.py)
 
 The `Chips` class handles the visual representation of different chip values for betting.
 
-### Button
+### [Button](classes/button.py)
 
 The `Button` class manages interactive buttons in the game's graphical interface, such as start, exit, deal, hit, and stand.
 
