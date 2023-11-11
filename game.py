@@ -78,24 +78,12 @@ def main():
                         bet_amount = chip_values[chip_index]
                         player.bet(bet_amount)
                     if round_ended:  # Reset game for a new round if the previous round ended
+                        player, croupier, chip_display, player_has_stood, player_busted, deal_button_pressed = reset_hands(player, croupier, chip_display, player_has_stood, player_busted, deal_button_pressed)
                         round_ended = False
-                        player.reset()  
-                        croupier.reset()  
-                        player_has_stood = False
-                        player_busted = False
-                        deal_button_pressed = False
-                        chip_display.show()
                         if player.balance == 0:
                             game_over = True
                     if restart_game: # Restart game if the player balance = 0
-                        deck = Deck()   
-                        player.reset()  
-                        croupier.reset()
-                        player.balance = 2500  
-                        player_has_stood = False
-                        player_busted = False
-                        deal_button_pressed = False
-                        chip_display.show()
+                        deck, player, croupier = restart_game_logic(deck, player, croupier, chip_display)
                         game_over = False
                         restart_game = False
                         
@@ -120,7 +108,7 @@ def main():
         if start_game: # Game has started
             chip_display.draw_chips(screen)
             display_text(screen, custom_font, f"Balance: ${player.balance}", (255, 255, 255), 565, 630)
-            display_text(screen, custom_font, f"Bet: ${player.total_bet}", (255, 255, 255), 10, 10))
+            display_text(screen, custom_font, f"Bet: ${player.total_bet}", (255, 255, 255), 10, 10)
             
             if player.total_bet >= 1 and not deal_button_pressed:
                 if deal_button.draw(screen):
@@ -154,7 +142,6 @@ def main():
                 first_card = croupier.hand[0]
                 croupier_hand_value = deck.calculate_hand_value([first_card])
                 display_text(screen, custom_font, f"{croupier_hand_value}", (255, 255, 255), 925, 218)
-                screen.blit(croupier_hand_text, (925, 218))
                 if hit_button.draw(screen):
                     player.get_hand(1, deck)
                     if deck.calculate_hand_value(player.hand) >= 22:
@@ -171,8 +158,7 @@ def main():
             croupier_hand_value = deck.calculate_hand_value(croupier.hand)
             display_text(screen, custom_font, f"{croupier_hand_value}", (255, 255, 255), 925, 218)
             user_new_balance = player.balance
-            pygame.draw.rect(screen, GREEN, (565, 630, 30, 30))
-            display_text(screen, custom_font, f"{user_new_balance}", (255, 255, 255), 565, 630)
+            pygame.draw.rect(screen, GREEN, (565, 600, 30, 30))
             # Display text for player loss
             display_text(screen, custom_font, f"Player Loses!", (255, 255, 255), center_x, center_y)
             display_text(screen, custom_font, f"Click the screen to start again", (255, 255, 255), center_x, 400)
@@ -230,6 +216,29 @@ def main():
             
         pygame.display.flip()
 
+def display_text(screen, font, text, color, x, y):
+    text_surface = font.render(text, True, color)
+    screen.blit(text_surface, (x, y))
+
+def load_image(image_path):
+    return pygame.image.load(image_path).convert_alpha()
+
+def restart_game_logic(deck, player, croupier, chip_display):
+    deck = Deck()
+    player.reset()
+    croupier.reset()
+    player.balance = 2500
+    chip_display.show()
+    return deck, player, croupier
+
+def reset_hands(player, croupier, chip_display, player_has_stood, player_busted, deal_button_pressed):
+    player.reset()  
+    croupier.reset()  
+    player_has_stood = False
+    player_busted = False
+    deal_button_pressed = False
+    chip_display.show()
+    return player, croupier, chip_display, player_has_stood, player_busted, deal_button_pressed
 
 if __name__ == "__main__":
     main()
