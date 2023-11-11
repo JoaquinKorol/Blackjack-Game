@@ -1,8 +1,8 @@
 # Blackjack Game
-#### Video Demo:  <>
+#### Video Demo:  <https://youtu.be/p3LywGwGYYo>
 ## Description
 
-My final proyect for CS50's Python course. It implements a Blackjack game using the Pygame library in Python. The game simulates a casino-style blackjack experience with a graphical user interface.
+This project represents my final proyect for CS50's Python course. It implements a Blackjack game using the Pygame library in Python. The game simulates a casino-style blackjack experience with a graphical user interface.
 
 ## Installation
 
@@ -33,31 +33,31 @@ Blackjack, also known as 21, is a popular card game played in casinos. The objec
   - The dealer must hit on 16 or less and stand on 17 or more.
   - The player wins if their hand is closer to 21 than the dealer's without exceeding 21.
 
-## [Classes](classes/)
+## Classes
 
 The classes in this project have been organized into separate files for better code structure and organization:
 
-### [Card](classes/Card.py)
+### Card
 
 The `Card` class represents a playing card, storing its suit, rank, and providing methods to retrieve its image path and value.
 
-### [Deck](classes/Deck.py)
+### Deck
 
 The `Deck` class creates a deck of 104 playing cards, manages shuffling, dealing cards, and calculating the value of a hand.
 
-### [Croupier](classes/croupier.py)
+### Croupier
 
 The `Croupier` class manages the dealer's actions, including dealing cards, following rules for hits/stands, and comparing hands.
 
-### [Player](classes/player.py)
+### Player
 
 The `Player` class represents the player in the game, handling their hand, bets, and balance.
 
-### [Chips](classes/chips.py)
+### Chips
 
 The `Chips` class handles the visual representation of different chip values for betting.
 
-### [Button](classes/button.py)
+### Button
 
 The `Button` class manages interactive buttons in the game's graphical interface, such as start, exit, deal, hit, and stand.
 
