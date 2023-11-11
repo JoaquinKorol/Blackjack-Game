@@ -2,7 +2,7 @@
 #### Video Demo:  <>
 ## Description
 
-This project represents my final proyect for CS50's Python course. It implements a Blackjack game using the Pygame library in Python. The game simulates a casino-style blackjack experience with a graphical user interface.
+My final proyect for CS50's Python course. It implements a Blackjack game using the Pygame library in Python. The game simulates a casino-style blackjack experience with a graphical user interface.
 
 ## Installation
 
