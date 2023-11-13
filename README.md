@@ -1,3 +1,4 @@
+![Certificate](certificate.jpg)
 # Blackjack Game
 #### Video Demo:  <https://youtu.be/p3LywGwGYYo>
 ## Description
